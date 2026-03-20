@@ -74,7 +74,27 @@ h1 {
     letter-spacing: 0.1em;
     background: linear-gradient(135deg, #fff 0%, #8b949e 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.brand-tag {
+    display: inline-flex;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-teal);
+    background: rgba(47, 185, 173, 0.1);
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 1px solid rgba(47, 185, 173, 0.2);
+    letter-spacing: normal;
+    text-transform: none;
+    -webkit-text-fill-color: var(--accent-teal);
+    backdrop-filter: blur(4px);
 }
 
 .subtitle {
