@@ -13,9 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const heightUnit = document.getElementById('height-unit');
     const weightUnit = document.getElementById('weight-unit');
 
-    let currentUnits = 'metric';
+    let currentUnits = 'imperial';
     let heightCm = null;
     let weightKg = null;
+
+    const validateInputs = () => {
+        const h = parseFloat(heightInput.value);
+        const w = parseFloat(weightInput.value);
+        const isValid = !isNaN(h) && h > 0 && !isNaN(w) && w > 0;
+        calcBtn.disabled = !isValid;
+    };
 
     // Synchronize base metric values on input
     heightInput.addEventListener('input', () => {
@@ -25,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             heightCm = currentUnits === 'metric' ? val : val * 2.54;
         }
+        validateInputs();
     });
 
     weightInput.addEventListener('input', () => {
@@ -34,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             weightKg = currentUnits === 'metric' ? val : val / 2.205;
         }
+        validateInputs();
     });
 
     const updateUIValues = () => {
@@ -58,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             heightInput.placeholder = '175';
             weightInput.placeholder = '70';
             updateUIValues();
+            validateInputs();
         }
     });
 
@@ -71,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             heightInput.placeholder = '69';
             weightInput.placeholder = '154';
             updateUIValues();
+            validateInputs();
         }
     });
 
