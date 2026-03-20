@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
             heightInput.placeholder = '175';
             weightInput.placeholder = '70';
             // Convert existing values if any
-            if (heightInput.value) heightInput.value = (heightInput.value * 30.48 / 1).toFixed(1);
-            if (weightInput.value) weightInput.value = (weightInput.value / 2.205).toFixed(1);
+            if (heightInput.value) heightInput.value = (parseFloat(heightInput.value) * 2.54).toFixed(1);
+            if (weightInput.value) weightInput.value = (parseFloat(weightInput.value) / 2.205).toFixed(1);
         }
     });
 
@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
             heightInput.placeholder = '69';
             weightInput.placeholder = '154';
             // Convert existing values if any
-            if (heightInput.value) heightInput.value = (heightInput.value / 2.54).toFixed(1);
-            if (weightInput.value) weightInput.value = (weightInput.value * 2.205).toFixed(1);
+            if (heightInput.value) heightInput.value = (parseFloat(heightInput.value) / 2.54).toFixed(1);
+            if (weightInput.value) weightInput.value = (parseFloat(weightInput.value) * 2.205).toFixed(1);
         }
     });
 
@@ -102,9 +102,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Highlight relevant row in table
         const rows = document.querySelectorAll('.who-table tbody tr');
+        const rangeKey = category.toLowerCase().replace('weight', '');
         rows.forEach(row => {
             row.classList.remove('highlight-row');
-            if (row.dataset.range === category.toLowerCase().split(' ')[0]) {
+            if (row.dataset.range === rangeKey) {
                 row.classList.add('highlight-row');
             }
         });
