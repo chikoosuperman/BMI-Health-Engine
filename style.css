@@ -76,10 +76,7 @@ h1 {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
+    margin-bottom: 0.5rem;
 }
 
 .brand-tag {
@@ -88,13 +85,14 @@ h1 {
     font-weight: 600;
     color: var(--accent-teal);
     background: rgba(47, 185, 173, 0.1);
-    padding: 4px 12px;
+    padding: 6px 16px;
     border-radius: 50px;
     border: 1px solid rgba(47, 185, 173, 0.2);
-    letter-spacing: normal;
+    letter-spacing: 0.02em;
     text-transform: none;
     -webkit-text-fill-color: var(--accent-teal);
     backdrop-filter: blur(4px);
+    margin-bottom: 1rem;
 }
 
 .subtitle {
