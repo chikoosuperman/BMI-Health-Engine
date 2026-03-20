@@ -14,6 +14,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const weightUnit = document.getElementById('weight-unit');
 
     let currentUnits = 'metric';
+    let heightCm = null;
+    let weightKg = null;
+
+    // Synchronize base metric values on input
+    heightInput.addEventListener('input', () => {
+        const val = parseFloat(heightInput.value);
+        if (isNaN(val)) {
+            heightCm = null;
+        } else {
+            heightCm = currentUnits === 'metric' ? val : val * 2.54;
+        }
+    });
+
+    weightInput.addEventListener('input', () => {
+        const val = parseFloat(weightInput.value);
+        if (isNaN(val)) {
+            weightKg = null;
+        } else {
+            weightKg = currentUnits === 'metric' ? val : val / 2.205;
+        }
+    });
+
+    const updateUIValues = () => {
+        if (heightCm !== null) {
+            heightInput.value = currentUnits === 'metric' ? 
+                heightCm.toFixed(1) : (heightCm / 2.54).toFixed(1);
+        }
+        if (weightKg !== null) {
+            weightInput.value = currentUnits === 'metric' ? 
+                weightKg.toFixed(1) : (weightKg * 2.205).toFixed(1);
+        }
+    };
 
     // Unit toggle logic
     toggleMetric.addEventListener('click', () => {
@@ -25,9 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             weightUnit.textContent = 'kg';
             heightInput.placeholder = '175';
             weightInput.placeholder = '70';
-            // Convert existing values if any
-            if (heightInput.value) heightInput.value = (parseFloat(heightInput.value) * 2.54).toFixed(1);
-            if (weightInput.value) weightInput.value = (parseFloat(weightInput.value) / 2.205).toFixed(1);
+            updateUIValues();
         }
     });
 
@@ -36,34 +66,23 @@ document.addEventListener('DOMContentLoaded', () => {
             currentUnits = 'imperial';
             toggleImperial.classList.add('active');
             toggleMetric.classList.remove('active');
-            heightUnit.textContent = 'in'; // Simplified for slider/input
+            heightUnit.textContent = 'in';
             weightUnit.textContent = 'lbs';
             heightInput.placeholder = '69';
             weightInput.placeholder = '154';
-            // Convert existing values if any
-            if (heightInput.value) heightInput.value = (parseFloat(heightInput.value) / 2.54).toFixed(1);
-            if (weightInput.value) weightInput.value = (parseFloat(weightInput.value) * 2.205).toFixed(1);
+            updateUIValues();
         }
     });
 
     calcBtn.addEventListener('click', () => {
-        const height = parseFloat(heightInput.value);
-        const weight = parseFloat(weightInput.value);
-
-        if (!height || !weight || height <= 0 || weight <= 0) {
+        if (heightCm === null || weightKg === null || heightCm <= 0 || weightKg <= 0) {
             alert('Please enter valid height and weight values.');
             return;
         }
 
-        let bmi;
-        if (currentUnits === 'metric') {
-            // BMI = kg / m^2
-            const heightInMeters = height / 100;
-            bmi = weight / (heightInMeters * heightInMeters);
-        } else {
-            // BMI = 703 * lbs / in^2
-            bmi = 703 * weight / (height * height);
-        }
+        // Always calculate from base metric values for maximum precision
+        const heightInMeters = heightCm / 100;
+        const bmi = weightKg / (heightInMeters * heightInMeters);
 
         displayResult(bmi);
     });
